@@ -53,6 +53,13 @@ std::vector<Student> ParseJSON(std::istream& jsonStream) {
 
   std::vector<Student> result;
 
+  if (!jsonData.at("items").is_array())
+    throw std::runtime_error("Items must be array");
+
+  if (jsonData.at("items").size() != jsonData.at("_meta").at("count"))
+    throw std::runtime_error(
+        "Mismatching _meta:count with real items array size");
+
   for (const auto& item : jsonData.at("items")) {
     auto student = item.get<Student>();
     result.push_back(student);
