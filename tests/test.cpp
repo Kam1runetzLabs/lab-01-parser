@@ -1,4 +1,4 @@
-// Copyright 2020 Your Name <your_email>
+// Copyright 2020 Kam1runetz <notsoserious2017@gmail.com>
 
 #include <gtest/gtest.h>
 
@@ -56,6 +56,7 @@ TEST(FeaturesTesting, PrintingTable) {
 |----------------|--------|----|--------|
 )";
   EXPECT_EQ(trueTable, printTableOutput.str());
+  Print(students, std::cout);
 }
 
 TEST(ErrorHandling, MismatchingArraySizeWithCount) {
