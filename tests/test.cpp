@@ -46,7 +46,7 @@ TEST(FeaturesTesting, PrintingTable) {
   std::stringstream printTableOutput;
   Print(students, printTableOutput);
 
-  std::string trueTable = R"(|name            |group   |avg |debt    |
+  const std::string trueTable = R"(|name            |group   |avg |debt    |
 |----------------|--------|----|--------|
 |Ivanov Petr     |1       |4.25|none    |
 |----------------|--------|----|--------|
@@ -94,15 +94,7 @@ TEST(ErrorHandling, MismatchingArraySizeWithCount) {
   std::stringstream jsonStream;
   jsonStream << jsonString;
 
-  std::string exceptionString;
-  try {
-    auto students = ParseJSON(jsonStream);
-  } catch (std::runtime_error &exception) {
-    exceptionString = exception.what();
-  }
-
-  EXPECT_EQ(exceptionString,
-            "Mismatching _meta:count with real items array size");
+  EXPECT_THROW(ParseJSON(jsonStream), std::runtime_error);
 }
 
 TEST(ErrorHandlig, ItemsIsNotArray) {
@@ -123,13 +115,5 @@ TEST(ErrorHandlig, ItemsIsNotArray) {
   std::stringstream jsonStream;
   jsonStream << jsonString;
 
-  std::string exceptionString;
-
-  try {
-    auto students = ParseJSON(jsonStream);
-  } catch (std::runtime_error &exception) {
-    exceptionString = exception.what();
-  }
-
-  EXPECT_EQ(exceptionString, "Items must be array");
+  EXPECT_THROW(ParseJSON(jsonStream), std::runtime_error);
 }
